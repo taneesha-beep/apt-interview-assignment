@@ -10,6 +10,10 @@ module.exports = {
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "realtime_orders",
   },
+  cdc: {
+    user: process.env.CDC_USER || "cdc_user",
+    password: process.env.CDC_PASSWORD || "",
+  },
   ws: {
     port: parseInt(process.env.WS_PORT, 10) || 8080,
   },
