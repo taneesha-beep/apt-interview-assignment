@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/taneesha-beep/apt-interview-assignment#readme",
   "dependencies": {
-    "dotenv": "^17.4.2"
+    "@vlasky/zongji": "^0.6.1",
+    "dotenv": "^17.4.2",
+    "zongji": "^0.5.1"
   }
 }
