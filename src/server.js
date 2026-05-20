@@ -1,17 +1,14 @@
 // wires binlog listener and websocket server.
 
-// src/server.js
-// Entry point. Wires together the binlog listener and the WebSocket server.
-
 const binlog = require("./binlog-listener");
 const ws = require("./ws-server");
 
 console.log("starting realtime-orders-cdc service...");
 
-// For now, still just log changes to the console. The wiring to ws.broadcast
-// happens in the next commit.
+// The wire: every change event coming out of the binlog becomes a
+// broadcast to every connected WebSocket client.
 binlog.changes.on("change", (evt) => {
-  console.log("[change]", JSON.stringify(evt, null, 2));
+  ws.broadcast(evt);
 });
 
 ws.start();
