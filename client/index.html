@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Realtime Orders Feed</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #fafafa;
+      color: #222;
+    }
+    h1 { margin-bottom: 4px; }
+    .subtitle { color: #666; margin-top: 0; }
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .status.connected    { background: #d4f4dd; color: #1d6f37; }
+    .status.disconnected { background: #f8d7da; color: #842029; }
+    #events {
+      display: flex;
+      flex-direction: column-reverse; /* newest on top */
+      gap: 10px;
+    }
+    .event {
+      background: white;
+      border-left: 4px solid #888;
+      padding: 12px 14px;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+    .event.insert { border-left-color: #28a745; }
+    .event.update { border-left-color: #ffc107; }
+    .event.delete { border-left-color: #dc3545; }
+    .event.hello  { border-left-color: #17a2b8; }
+    .event-type {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      margin-right: 8px;
+    }
+    .event-time { color: #888; font-size: 12px; float: right; }
+    pre {
+      margin: 6px 0 0;
+      background: #f4f4f4;
+      padding: 8px;
+      border-radius: 3px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Realtime Orders Feed</h1>
+  <p class="subtitle">Live updates from the <code>orders</code> table via MySQL binlog &rarr; WebSocket.</p>
+  <div id="status" class="status disconnected">disconnected</div>
+  <div id="events"></div>
+
+  <script>
+    const WS_URL = 'ws://localhost:8080';
+    const statusEl = document.getElementById('status');
+    const eventsEl = document.getElementById('events');
+
+    function setStatus(connected) {
+      statusEl.textContent = connected ? 'connected' : 'disconnected';
+      statusEl.className = 'status ' + (connected ? 'connected' : 'disconnected');
+    }
+
+    function renderEvent(evt) {
+      const div = document.createElement('div');
+      div.className = 'event ' + (evt.type || 'unknown');
+      const time = new Date().toLocaleTimeString();
+      div.innerHTML =
+        '<span class="event-type">' + (evt.type || 'unknown') + '</span>' +
+        '<span class="event-time">' + time + '</span>' +
+        '<pre>' + JSON.stringify(evt, null, 2) + '</pre>';
+      eventsEl.appendChild(div);
+    }
+
+    function connect() {
+      const ws = new WebSocket(WS_URL);
+
+      ws.onopen = () => {
+        setStatus(true);
+        console.log('[ws] open');
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const payload = JSON.parse(event.data);
+          renderEvent(payload);
+        } catch (err) {
+          console.error('[ws] invalid JSON:', event.data);
+        }
+      };
+
+      ws.onclose = () => {
+        setStatus(false);
+        console.log('[ws] closed; retrying in 2s');
+        setTimeout(connect, 2000);
+      };
+
+      ws.onerror = (err) => {
+        console.error('[ws] error:', err);
+      };
+    }
+
+    connect();
+  </script>
+</body>
+</html>
