@@ -10,12 +10,21 @@
     "type": "git",
     "url": "git+https://github.com/taneesha-beep/apt-interview-assignment.git"
   },
-  "keywords": ["mysql", "binlog", "cdc", "websocket", "realtime"],
+  "keywords": [
+    "mysql",
+    "binlog",
+    "cdc",
+    "websocket",
+    "realtime"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/taneesha-beep/apt-interview-assignment/issues"
   },
-  "homepage": "https://github.com/taneesha-beep/apt-interview-assignment#readme"
+  "homepage": "https://github.com/taneesha-beep/apt-interview-assignment#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
 }
