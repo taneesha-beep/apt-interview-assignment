@@ -16,6 +16,11 @@ A backend service that streams row changes on a MySQL `orders` table to connecte
 
 Any INSERT/UPDATE/DELETE on `orders` — from any source — gets captured by MySQL's binary log, read by the Node service acting as a replication client, and pushed to every connected WebSocket client.
 
+<img width="1440" height="900" alt="Screenshot 2026-05-20 at 5 17 03 PM" src="https://github.com/user-attachments/assets/f92410ee-dfa8-4943-9c18-5a08d5981c7c" />
+<img width="1440" height="900" alt="Screenshot 2026-05-20 at 5 17 34 PM" src="https://github.com/user-attachments/assets/d1afa8c6-dc95-43c7-a33e-876473e2b554" />
+<img width="1440" height="900" alt="Screenshot 2026-05-20 at 5 17 47 PM" src="https://github.com/user-attachments/assets/973db844-173c-4570-bbfa-548680e1a31b" />
+<img width="1440" height="900" alt="Screenshot 2026-05-20 at 5 18 07 PM" src="https://github.com/user-attachments/assets/84d356f2-513f-40fe-b656-ea9d380df90b" />
+
 ## Why this approach
 
 The assignment forbids client-side polling. There are essentially three ways to detect database changes:
