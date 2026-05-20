@@ -1,0 +1,21 @@
+{
+  "name": "apt-assgn",
+  "version": "1.0.0",
+  "description": "Real-time order updates via MySQL binlog CDC and WebSockets — APT interview assignment",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taneesha-beep/apt-interview-assignment.git"
+  },
+  "keywords": ["mysql", "binlog", "cdc", "websocket", "realtime"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/taneesha-beep/apt-interview-assignment/issues"
+  },
+  "homepage": "https://github.com/taneesha-beep/apt-interview-assignment#readme"
+}
