@@ -1,6 +1,9 @@
 # Real-time Order Updates (MySQL CDC → WebSockets)
 
 A backend service that streams row changes on a MySQL `orders` table to connected browser clients in real time, with no client-side polling. Built as a take-home assignment.
+ 
+## Skills demonstrated: 
+Change Data Capture · MySQL replication protocol · Event-driven architecture · WebSockets · Node.js · Database security (least privilege) · System design tradeoffs
 
 ## How it works
 
